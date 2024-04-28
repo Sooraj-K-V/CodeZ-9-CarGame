@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .grid-container {
+            background: url("bg2.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+            width: 100%;
+            height: 100vh;
+            margin: 0px;
+            padding: 0px;
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+            align-items: center;
+        }
+
+        .carway {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .carway img {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .way {
+            width: 230px;
+            height: 100px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* -------------- */
+
+        .enemies0 {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        .enemyway0 {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+
+            width: 70px;
+            height: 70px;
+            margin-bottom: 10px;
+        }
+
+        .enemies1 {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        .enemyway1 {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+
+            width: 110px;
+            height: 70px;
+            margin-bottom: 10px;
+        }
+
+        .enemies2 {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        .enemyway2 {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            
+            width: 160px;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+
+        /* ----------------- */
+
+        .enemies0 img {
+            width: 50px;
+        }
+
+        .enemies1 img {
+            width: 70px;
+        }
+
+        .enemies2 img {
+            width: 90px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="grid-container">
+        <div class="enemies0">
+            <div class="enemyway0">
+                <img id="one" src="" alt="">
+            </div>
+            <div class="enemyway0">
+                <img id="two" src="" alt="">
+            </div>
+            <div class="enemyway0">
+                <img id="three" src="" alt="">
+            </div>
+        </div>
+        <div class="enemies1">
+            <div class="enemyway1">
+                <img id="one-one" src="" alt="">
+            </div>
+            <div class="enemyway1">
+                <img id="two-two" src="" alt="">
+            </div>
+            <div class="enemyway1">
+                <img id="three-three" src="" alt="">
+            </div>
+        </div>
+        <div class="enemies2">
+            <div class="enemyway2">
+                <img id="one-one-one" src="" alt="">
+            </div>
+            <div class="enemyway2">
+                <img id="two-two-two" src="" alt="">
+            </div>
+            <div class="enemyway2">
+                <img id="three-three-three" src="" alt="">
+            </div>
+        </div>
+
+        <div class="carway">
+            <div class="way1 way">
+                <img src="" id="way-1" alt="">
+            </div>
+            <div class="way2 way">
+                <img src="car1.png" id="way-2" alt="">
+            </div>
+            <div class="way3 way">
+                <img src="" id="way-3" alt="">
+            </div>
+        </div>
+
+    </div>
+    <script>
+        //one sec wait 
+        function delay() {
+
+            // Call the function recursively after a delay of 1 second
+            setTimeout(function () {
+                printNumbersWithDelay(number);
+            }, 1000); // 1000 milliseconds = 1 second
+        }
+        var end = 1;
+        $(document).ready(function () {
+            // Function to handle key presses
+            $(document).keypress(function (event) {
+                $("img").show(); // Ensure all images are visible before handling keypress
+
+                if (event.key === 'j') {
+                    $("#way-1").attr("src", "car1.png");
+                    $("#way-2, #way-3").hide();
+                } else if (event.key === 'k') {
+                    $("#way-2").attr("src", "car1.png");
+                    $("#way-1, #way-3").hide();
+                } else if (event.key === 'l') {
+                    $("#way-3").attr("src", "car1.png");
+                    $("#way-1, #way-2").hide();
+                }
+            });
+
+            // Function to move enemy cars initially and at intervals
+            function startMovingCars() {
+                // Function to check if the car in way1 has been blasted
+                var sound = new Audio("bomb-blast-sound-effects_L4wPZoIj.mp3");
+
+                // Function to move enemy cars
+                function moveEnemyCar(randomNumber) {
+                    //Enemy straight line 
+                    if (randomNumber === 1) {
+                        $("#one").attr("src", "enemy-car2.png");
+                        setTimeout(function () {
+                            $("#one").remove();
+                            $("#one-one").attr("src", "enemy-car2.png");
+                            setTimeout(function () {
+                                $("#one-one").remove();
+                                $("#one-one-one").attr("src", "enemy-car2.png");
+                                setTimeout(function () {
+                                    // Check if the src attribute of the image with id "way-1" is empty
+                                    if ($("#way-1").attr("src") === "") {
+                                        // The src attribute is empty
+                                        console.log("The src attribute is empty.");
+                                        $("#one-one-one").remove();
+                                        $("#way-1").attr("src", "enemy-car2.png");
+                                        $("#way-1").show();
+                                        setTimeout(function () {
+                                            $("#way-1").hide();
+                                        }, 700);
+                                    } else {
+                                        // The src attribute is not empty
+                                        console.log("The src attribute is not empty.");
+                                        $("#one-one-one").remove();
+                                        $("#way-1").attr("src", "blast.png");
+                                        sound.play();
+                                        $("#way-1").show();
+
+                                    }
+                                }, 700);
+                            }, 700);
+                        }, 700); // Delay of 0.7 seconds for each step
+                        
+                        function checkBlast() {
+                            return $("#way-1").attr("src") === "blast.png";
+                        }
+
+                    } else if (randomNumber === 2) {
+                        $("#two").attr("src", "enemy-car2.png");
+                        setTimeout(function () {
+                            $("#two").remove();
+                            $("#two-two").attr("src", "enemy-car2.png");
+                            setTimeout(function () {
+                                $("#two-two").remove();
+                                $("#two-two-two").attr("src", "enemy-car2.png");
+                                setTimeout(function () {
+                                    // Check if the src attribute of the image with id "way-1" is empty
+                                    if ($("#way-2").attr("src") === "") {
+                                        // The src attribute is empty
+                                        console.log("The src attribute is empty.");
+                                        $("#two-two-two").remove();
+                                        $("#way-2").attr("src", "enemy-car2.png");
+                                        $("#way-2").show();
+                                        setTimeout(function () {
+                                            $("#way-2").hide();
+                                        }, 700);
+                                    } else {
+                                        // The src attribute is not empty
+                                        console.log("The src attribute is not empty.");
+                                        $("#two-two-two").remove();
+                                        $("#way-2").attr("src", "blast.png");
+                                        $("#way-2").show();
+
+                                    }
+                                }, 700);
+                            }, 700);
+                        }, 700); // Delay of 0.7 seconds for each step
+                    } else if (randomNumber === 3) {
+                        $("#three").attr("src", "enemy-car2.png");
+                        setTimeout(function () {
+                            $("#three").remove();
+                            $("#three-three").attr("src", "enemy-car2.png");
+                            setTimeout(function () {
+                                $("#three-three").remove();
+                                $("#three-three-three").attr("src", "enemy-car2.png");
+                                setTimeout(function () {
+                                    // Check if the src attribute of the image with id "way-1" is empty
+                                    if ($("#way-3").attr("src") === "") {
+                                        // The src attribute is empty
+                                        console.log("The src attribute is empty.");
+                                        $("#three-three-three").remove();
+                                        $("#way-3").attr("src", "enemy-car2.png");
+                                        $("#way-3").show();
+                                        setTimeout(function () {
+                                            $("#way-1").hide();
+                                        }, 700);
+                                    } else {
+                                        // The src attribute is not empty
+                                        console.log("The src attribute is not empty.");
+                                        $("#three-three-three").remove();
+                                        $("#way-3").attr("src", "blast.png");
+                                        $("#way-3").show();
+
+                                    }
+                                }, 700);
+                            }, 700);
+                        }, 700); // Delay of 0.7 seconds for each step
+                    }
+                }
+
+                // Function to move enemy cars and check for blast until way1 is blasted
+                function moveAndCheckBlast() {
+                    var interval = setInterval(function () {
+                        // Generate a random number between 1 and 3
+                        var randomNumber = Math.floor(Math.random() * 3) + 1;
+                        console.log(randomNumber);
+
+                        // Call moveEnemyCar initially
+                        moveEnemyCar(randomNumber);
+
+                        // Check if way1 is blasted
+                        if (checkBlast()) {
+                            clearInterval(interval);
+                        }
+                    }, 2000);
+                }
+
+                // Call the moveAndCheckBlast function to start moving enemy cars
+                moveAndCheckBlast();
+            }
+
+            // Start moving enemy cars
+            startMovingCars();
+        });
+
+    </script>
+</body>
+
+</html>
